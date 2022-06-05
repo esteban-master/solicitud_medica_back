@@ -76,3 +76,5 @@ group :test do
   gem 'faker', '~> 2.20'
   gem 'database_cleaner', '~> 2.0.1'
 end
+
+gem "byebug", "~> 11.1", :groups => [:development, :test]
