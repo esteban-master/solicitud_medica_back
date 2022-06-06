@@ -7,6 +7,8 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  health_professional_id :bigint           not null
+#  attended               :boolean
+#  date                   :datetime
 #
 require "test_helper"
 

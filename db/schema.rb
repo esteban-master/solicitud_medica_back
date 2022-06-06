@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_05_011333) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_05_194027) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,7 +26,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_05_011333) do
     t.bigint "entity_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "profession_id"
     t.index ["entity_id"], name: "index_health_professionals_on_entity_id"
+    t.index ["profession_id"], name: "index_health_professionals_on_profession_id"
   end
 
   create_table "medical_cares", force: :cascade do |t|
@@ -47,6 +49,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_05_011333) do
     t.index ["entity_id"], name: "index_patients_on_entity_id"
   end
 
+  create_table "professions", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.bigint "entity_id", null: false
     t.string "description"
@@ -56,6 +64,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_05_011333) do
   end
 
   add_foreign_key "health_professionals", "entities"
+  add_foreign_key "health_professionals", "professions"
   add_foreign_key "medical_cares", "health_professionals"
   add_foreign_key "medical_cares", "patients"
   add_foreign_key "patients", "entities"

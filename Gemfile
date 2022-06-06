@@ -59,15 +59,6 @@ group :development do
   gem "web-console"
   gem 'rubocop', require: false
   gem 'annotate', '~> 3.2.0'
-  # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
-  # gem "rack-mini-profiler"
-
-  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem "spring"
-end
-
-group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
@@ -75,6 +66,11 @@ group :test do
   gem 'shoulda-matchers', '~> 5.1'
   gem 'faker', '~> 2.20'
   gem 'database_cleaner', '~> 2.0.1'
+  gem "byebug", "~> 11.1"
+  # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
+  # gem "rack-mini-profiler"
+
+  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
+  # gem "spring"
 end
 
-gem "byebug", "~> 11.1", :groups => [:development, :test]

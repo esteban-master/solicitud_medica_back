@@ -8,9 +8,9 @@
 #  updated_at     :datetime         not null
 #  professions_id :bigint
 #
-
-one:
-  entity: one
-
-two:
-  entity: two
+FactoryBot.define do
+  factory :health_professional do
+    entity
+    profession
+  end
+end
