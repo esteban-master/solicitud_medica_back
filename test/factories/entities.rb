@@ -14,5 +14,6 @@ FactoryBot.define do
     name { Faker::Name.name  }
     tax_number { Faker::Number.number(digits: 9) }
     address { Faker::Address.street_address }
+    photo { Faker::Placeholdit.image }
   end
 end
