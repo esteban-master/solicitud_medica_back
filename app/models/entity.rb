@@ -11,4 +11,6 @@
 #
 class Entity < ApplicationRecord
   has_many :reviews
+  has_one :health_professional
+  has_one :patient
 end
