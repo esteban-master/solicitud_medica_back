@@ -10,9 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_19_064846) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_21_025136) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "diseases", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "entities", force: :cascade do |t|
     t.string "name"
@@ -50,6 +56,32 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_19_064846) do
     t.boolean "canceled", default: false
     t.index ["health_professional_id"], name: "index_medical_cares_on_health_professional_id"
     t.index ["patient_id"], name: "index_medical_cares_on_patient_id"
+  end
+
+  create_table "medical_records", force: :cascade do |t|
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.bigint "patient_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["patient_id"], name: "index_medical_records_on_patient_id"
+  end
+
+  create_table "medicine_lines", force: :cascade do |t|
+    t.bigint "medicine_id", null: false
+    t.bigint "medical_record_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["medical_record_id"], name: "index_medicine_lines_on_medical_record_id"
+    t.index ["medicine_id"], name: "index_medicine_lines_on_medicine_id"
+  end
+
+  create_table "medicines", force: :cascade do |t|
+    t.string "name"
+    t.string "dose"
+    t.string "management"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "patients", force: :cascade do |t|
@@ -100,6 +132,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_19_064846) do
   add_foreign_key "health_professionals", "professions"
   add_foreign_key "medical_cares", "health_professionals"
   add_foreign_key "medical_cares", "patients"
+  add_foreign_key "medical_records", "patients"
+  add_foreign_key "medicine_lines", "medical_records"
+  add_foreign_key "medicine_lines", "medicines"
   add_foreign_key "patients", "entities"
   add_foreign_key "reviews", "entities"
 end

@@ -21,7 +21,4 @@ class PatientController < ApplicationController
     render json: patient.last, status: 200
   end
 
-  def patients_for_professional
-    MedicalCare
-  end
 end
