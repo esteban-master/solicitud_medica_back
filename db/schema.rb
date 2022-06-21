@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_21_025136) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_21_221046) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "disease_patients", force: :cascade do |t|
+    t.bigint "patient_id", null: false
+    t.bigint "disease_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["disease_id"], name: "index_disease_patients_on_disease_id"
+    t.index ["patient_id"], name: "index_disease_patients_on_patient_id"
+  end
 
   create_table "diseases", force: :cascade do |t|
     t.string "name"
@@ -64,6 +73,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_025136) do
     t.bigint "patient_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "health_professional_id"
+    t.text "observations"
+    t.index ["health_professional_id"], name: "index_medical_records_on_health_professional_id"
     t.index ["patient_id"], name: "index_medical_records_on_patient_id"
   end
 
@@ -126,12 +138,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_21_025136) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "disease_patients", "diseases"
+  add_foreign_key "disease_patients", "patients"
   add_foreign_key "entities", "health_professionals"
   add_foreign_key "entities", "patients"
   add_foreign_key "health_professionals", "entities"
   add_foreign_key "health_professionals", "professions"
   add_foreign_key "medical_cares", "health_professionals"
   add_foreign_key "medical_cares", "patients"
+  add_foreign_key "medical_records", "health_professionals"
   add_foreign_key "medical_records", "patients"
   add_foreign_key "medicine_lines", "medical_records"
   add_foreign_key "medicine_lines", "medicines"

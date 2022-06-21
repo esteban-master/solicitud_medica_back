@@ -21,4 +21,24 @@ class PatientController < ApplicationController
     render json: patient.last, status: 200
   end
 
+  def medical_records
+    medical_records = MedicalRecord.where(patient_id: params[:patientId], health_professional_id: params[:professionalId])
+                       .includes(medicine_lines: [:medicine]).map do |mr|
+      {
+        medicine_lines: mr.medicine_lines.map{|item| item.medicine},
+        start_date: mr.start_date,
+        end_date: mr.end_date,
+        id: mr.id,
+        observations: mr.observations,
+        created_at: mr.created_at
+      }
+    end
+
+    render json: {
+      medical_records: medical_records,
+      diseases: DiseasePatient.select('diseases.id as id', 'diseases.name as name').where(patient_id: params[:patientId]).joins(:disease),
+      last_medical_record: medical_records.last,
+      patient: Patient.find(params[:patientId]).entity
+    }, status: 200
+  end
 end
