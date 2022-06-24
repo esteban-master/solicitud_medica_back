@@ -41,4 +41,14 @@ class PatientController < ApplicationController
       patient: Patient.find(params[:patientId]).entity
     }, status: 200
   end
+
+
+  def account_request
+    PatientMailer.with(data: { email: params[:email], tax_number: params[:tax_number], name: params[:name] }).account_request.deliver_now
+
+    render json: {
+      ok: true, message: 'Solicitud enviada con exito'
+    }, status: 200
+  end
+
 end

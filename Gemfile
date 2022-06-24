@@ -68,6 +68,7 @@ group :development do
   gem 'faker', '~> 2.20'
   gem 'database_cleaner', '~> 2.0.1'
   gem "byebug", "~> 11.1"
+  gem "letter_opener"
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 

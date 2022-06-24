@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   get 'patients_for_professional/:professional_id', to: 'health_professional#patients_for_professional'
   get 'medical_records', to: 'patient#medical_records'
   get 'medicines', to: 'medicine#index'
+  get 'account_request', to: 'patient#account_request'
 end
