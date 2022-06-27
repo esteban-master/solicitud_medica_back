@@ -22,8 +22,10 @@ class PatientController < ApplicationController
   end
 
   def medical_records
-    medical_records = MedicalRecord.where(patient_id: params[:patientId], health_professional_id: params[:professionalId])
-                       .includes(medicine_lines: [:medicine]).map do |mr|
+    medical_records = MedicalRecord.includes(medicine_lines: [:medicine]).where(patient_id: params[:patientId]).order(created_at: :asc)
+    medical_records = medical_records.where(health_professional_id: params[:professionalId]) unless params[:professionalId].to_i.zero?
+
+    medical_records = medical_records.map do |mr|
       {
         medicine_lines: mr.medicine_lines.map{|item| item.medicine},
         start_date: mr.start_date,
@@ -33,6 +35,7 @@ class PatientController < ApplicationController
         created_at: mr.created_at
       }
     end
+
 
     render json: {
       medical_records: medical_records,
@@ -51,4 +54,11 @@ class PatientController < ApplicationController
     }, status: 200
   end
 
+  def last_professionals
+    last_professionals = MedicalCare.includes(health_professional: [:profession, :entity]).where(patient_id: params[:id], attended: true, canceled: false).order(date: :desc).map do |mc|
+      health_professional = mc.health_professional
+      { date: mc.date, professional: { id: health_professional.id, name: health_professional.entity.name, professionName: health_professional.profession.name, photo: health_professional.entity.photo } }
+    end.group_by { |item| item[:professional][:id] }
+    render json: last_professionals, status: 200
+  end
 end

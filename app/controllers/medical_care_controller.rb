@@ -16,16 +16,16 @@ class MedicalCareController < ApplicationController
   end
 
   def medical_care_professional
-    start_date = DateTime.parse(params[:startDate]).beginning_of_day
-    end_date = DateTime.parse(params[:endDate]).end_of_day
+    start_date = DateTime.parse(params[:startDate].to_s).beginning_of_day
+    end_date = DateTime.parse(params[:endDate].to_s).end_of_day
     render json: MedicalCare.where(health_professional_id: params[:id], date: start_date..end_date, canceled: false), status: 200
   end
 
   def next_medical_care
-    date = DateTime.parse(params[:date])
+    date = DateTime.parse(params[:date].to_s)
     next_medical_care = MedicalCare.where("date > ? AND attended = ? AND canceled = ?", date, false, false)
 
-    if params[:patientId]
+    if !params[:patientId].blank?
       next_medical_care = next_medical_care.where(patient_id: params[:patientId]).last
     else
       next_medical_care = next_medical_care.where(health_professional_id: params[:healthProfessionalId]).last

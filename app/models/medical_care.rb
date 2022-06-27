@@ -9,6 +9,7 @@
 #  health_professional_id :bigint           not null
 #  attended               :boolean
 #  date                   :datetime
+#  canceled               :boolean          default(FALSE)
 #
 class MedicalCare < ApplicationRecord
   belongs_to :patient
