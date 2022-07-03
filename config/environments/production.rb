@@ -74,7 +74,7 @@ Rails.application.configure do
     ssl: true,
     port: 587,
     user_name: "estebanenriquebeltran@gmail.com",
-    password: "ECAVBTYQFLGQQY",
+    password: "ssqulezrfamnemkg",
     authentication: 'plain',
     enable_starttls_auto: true
   }
