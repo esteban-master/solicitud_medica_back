@@ -29,17 +29,7 @@ class HealthProfessionalController < ApplicationController
   end
 
   def patients_for_professional
-    # medical_cares_patients = MedicalCare.where(health_professional_id: 70)
-    #            .select('medical_cares.id as id',
-    #                    'patients.id as patient_id',
-    #                    'entities.name as patient_name',
-    #                    'entities.tax_number as patient_tax_number',
-    #                    'entities.address as patient_address',
-    #                    'entities.phone as patient_phone',
-    #                    'medical_cares.*')
-    #            .joins(patient: :entity)
-    #            .order(date: :desc)
-    patients_ids = MedicalCare.where(health_professional_id: params[:professional_id]).pluck(:patient_id)
+    patients_ids = MedicalCare.where(health_professional_id: params[:professional_id]).pluck(:patient_id).uniq
 
     render json: Entity.where(patient_id: patients_ids), status: 200
   end
