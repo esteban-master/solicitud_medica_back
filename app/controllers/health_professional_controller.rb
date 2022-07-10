@@ -33,4 +33,12 @@ class HealthProfessionalController < ApplicationController
 
     render json: Entity.where(patient_id: patients_ids), status: 200
   end
+
+  def upcoming_appointments
+    upcoming_appointments = MedicalCare.where('health_professional_id = ? AND date >= ?', params[:id], Date.today.beginning_of_day)
+                                       .includes(patient: [:entity])
+                                       .order(date: :asc)
+                                       .map {|mc| { medical_care: mc, patient: mc.patient.entity } }
+    render json: upcoming_appointments, status: 200
+  end
 end

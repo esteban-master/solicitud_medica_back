@@ -1,10 +1,6 @@
 class PatientController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  def index
-
-  end
-
   def create
     new_patient = NewProfessionalOrPatientServices.new(params, 'patient')
     if new_patient[:error].nil?

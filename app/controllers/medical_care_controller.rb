@@ -4,6 +4,14 @@ class MedicalCareController < ApplicationController
     render json: MedicalCare.all, status: 200
   end
 
+  def update
+    medical_care = MedicalCare.find(params[:id])
+    medical_care.update(
+      attended: params[:attended]
+    )
+    render json: medical_care, status: 200
+  end
+
   def create
     new_medical_care = MedicalCare.new(
       health_professional_id: params[:healthProfessionalId],
